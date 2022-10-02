@@ -71,6 +71,7 @@ class Game extends Component {
             <Dice
               dice={this.state.dice}
               locked={this.state.locked}
+              disabled={this.state.rollsLeft === 0}
               handleClick={this.toggleLocked}
             />
             <div className='Game-button-wrapper'>

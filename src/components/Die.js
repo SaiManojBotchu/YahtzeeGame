@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import '../styling/Die.css';
 
+const dieNames = ['', 'one', 'two', 'three', 'four', 'five', 'six'];
+
 class Die extends Component {
   constructor(props) {
     super(props);
@@ -11,16 +13,12 @@ class Die extends Component {
     this.props.handleClick(this.props.idx);
   }
 
-  // FIXME: 2)call hadleClick with parameters
   render() {
-    return (
-      <button
-        className='Die'
-        style={{ backgroundColor: this.props.locked ? 'grey' : 'black' }}
-        onClick={this.handleDieClick}>
-        {this.props.val}
-      </button>
-    );
+    const { val, locked, disabled } = this.props;
+    let classes = `Die fas fa-dice-${dieNames[val]} fa-4x `;
+    if (locked) classes += 'Die-locked';
+
+    return <i className={classes} onClick={this.handleDieClick} disabled={disabled} />;
   }
 }
 
