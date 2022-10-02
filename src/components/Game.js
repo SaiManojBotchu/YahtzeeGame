@@ -35,7 +35,7 @@ class Game extends Component {
   }
 
   roll() {
-    // roll dice whose indexes are in reroll
+    // roll dice whose indexes are not locked
     this.setState(st => ({
       dice: st.dice.map((d, i) => (st.locked[i] ? d : Math.ceil(Math.random() * 6))),
       locked: st.rollsLeft > 1 ? st.locked : Array(NUM_DICE).fill(true),
@@ -44,10 +44,11 @@ class Game extends Component {
   }
 
   toggleLocked(idx) {
-    // toggle whether idx is in locked or not
-    this.setState(st => ({
-      locked: [...st.locked.slice(0, idx), !st.locked[idx], ...st.locked.slice(idx + 1)]
-    }));
+    if (this.state.rollsLeft > 0) {
+      this.setState(st => ({
+        locked: [...st.locked.slice(0, idx), !st.locked[idx], ...st.locked.slice(idx + 1)]
+      }));
+    }
   }
 
   doScore(rulename, ruleFn) {
@@ -76,7 +77,7 @@ class Game extends Component {
               <button
                 className='Game-reroll'
                 // disable Rerolls button if every value of locked is true
-                disabled={this.state.locked.every(x => x)}
+                disabled={this.state.rollsLeft === 0 || this.state.locked.every(v => v)}
                 onClick={this.roll}>
                 {`${this.state.rollsLeft} Rerolls Left`}
               </button>
