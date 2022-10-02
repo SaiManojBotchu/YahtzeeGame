@@ -37,7 +37,8 @@
     "react/no-access-state-in-setstate": 0,
     "react/jsx-closing-bracket-location": 0,
     "react/button-has-type": 0,
-    "react/no-array-index-key": 1
+    "react/no-array-index-key": 1,
+    "react/static-property-placement": 0
   }
 }
 
