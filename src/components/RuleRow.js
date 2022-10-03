@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import '../styling/RuleRow.css';
 
 class RuleRow extends Component {
-  // FIXME: call doScore with parameters
   render() {
     const { score, name, desc, doScore } = this.props;
     const disabled = score !== undefined;
