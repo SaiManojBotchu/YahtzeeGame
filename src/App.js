@@ -12,3 +12,11 @@ function App() {
 }
 
 export default App;
+
+/* APP TREE
+-- Game
+  -- Dice {header}
+    -- Die
+  -- ScoreTable
+    -- RuleRow
+*/

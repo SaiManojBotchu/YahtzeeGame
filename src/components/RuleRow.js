@@ -3,7 +3,7 @@ import '../styling/RuleRow.css';
 
 class RuleRow extends Component {
   render() {
-    const { score, name, desc, doScore } = this.props;
+    const { name, score, desc, doScore } = this.props;
     const disabled = score !== undefined;
     return (
       <tr

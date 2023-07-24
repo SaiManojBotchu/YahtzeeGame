@@ -10,13 +10,16 @@
 
 class Rule {
   constructor(params) {
-    // put all properties in params on instance
+    // When Object.assign(this, params) is executed, it assigns all properties
+    // present in the params object to the instance (this) so that the object instance
+    // now contains those properties with the same values.
+    // It is a simple way to assign properties to an object during its creation.
     Object.assign(this, params);
   }
 
   sum(dice) {
-    // sum of all dice
-    return dice.reduce((prev, curr) => prev + curr);
+    // sum of all dice (initially sum will be 0)
+    return dice.reduce((sum, curr) => sum + curr);
   }
 
   freq(dice) {
@@ -28,7 +31,7 @@ class Rule {
 
   count(dice, val) {
     // # times val appears in dice
-    return dice.filter(d => d === val).length;
+    return dice.filter((d) => d === val).length;
   }
 }
 
@@ -36,37 +39,30 @@ class Rule {
  *
  * Used for rules like "sum of all ones"
  */
-
 class TotalOneNumber extends Rule {
-  // evalRoll(dice) {
-  //   return this.val * this.count(dice, this.val);
-  // }
-  evalRoll = dice => this.val * this.count(dice, this.val);
+  evalRoll = (dice) => this.val * this.count(dice, this.val);
 }
 
 /** Given a required # of same dice, return sum of all dice.
  *
  * Used for rules like "sum of all dice when there is a 3-of-kind"
  */
-
 class SumDistro extends Rule {
   // do any of the counts meet of exceed this distro?
-  evalRoll = dice => (this.freq(dice).some(c => c >= this.count) ? this.sum(dice) : 0);
+  evalRoll = (dice) => (this.freq(dice).some((c) => c >= this.count) ? this.sum(dice) : 0);
 }
 
 /** Check if full house (3-of-kind and 2-of-kind) */
-
 class FullHouse extends Rule {
-  evalRoll = dice => {
+  evalRoll = (dice) => {
     const freqs = this.freq(dice);
     return freqs.includes(3) && freqs.includes(2) ? this.score : 0;
   };
 }
 
 /** Check for small straights. */
-
 class SmallStraight extends Rule {
-  evalRoll = dice => {
+  evalRoll = (dice) => {
     const d = new Set(dice);
     // straight can be 234 + 1 or 5
     if (d.has(2) && d.has(3) && d.has(4) && (d.has(1) || d.has(5))) {
@@ -81,9 +77,8 @@ class SmallStraight extends Rule {
 }
 
 /** Check for large straights. */
-
 class LargeStraight extends Rule {
-  evalRoll = dice => {
+  evalRoll = (dice) => {
     const d = new Set(dice);
     // large straight must be 5 different dice & only one can be a 1 or a 6
     return d.size === 5 && d.has(1) && d.has(6) ? 0 : this.score;
@@ -92,10 +87,9 @@ class LargeStraight extends Rule {
 }
 
 /** Check if all dice are same. */
-
 class Yahtzee extends Rule {
   // all dice must be the same
-  evalRoll = dice => (this.freq(dice)[0] === 5 ? this.score : 0);
+  evalRoll = (dice) => (this.freq(dice)[0] === 5 ? this.score : 0);
 }
 
 // ones, twos, etc score as sum of that value
